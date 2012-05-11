@@ -16,4 +16,7 @@ Examples
 <!--- Use without objects --->
 #datePickerTag(label="Birthday", name="birthday", value=Now())#
 
+<!--- Use with jQuery datePicker options --->
+#datePicker(label="Birthday", objectName="user", property="birthday", dateFormat="dd/mm/yy", goToCurrent=true, dayNames='["Sundy", "Mundy", "Tuesdy", "Wednesdy", "Thursdy", "Fridy", "Satdy"]')#
+
 Note: All jQuery specific arguments (jQuery datePicker options) are case-sensitive
