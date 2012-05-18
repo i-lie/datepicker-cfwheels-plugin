@@ -56,7 +56,11 @@
 		
 		<!--- apply date formatting to the object property.. is this the correct way to manipulate an object within a plugin? --->
 		<cfif StructKeyExists(arguments,"objectName")>
-			<cfset loc.objectProperty = variables[arguments.objectName][arguments.property]>
+			<cfif StructKeyExists(variables[arguments.objectName], arguments.property)>
+				<cfset loc.objectProperty = variables[arguments.objectName][arguments.property]>
+			<cfelse>
+				<cfset loc.objectProperty = "">
+			</cfif>
 			<cfif IsDate(loc.objectProperty)>
 				<cfset variables[arguments.objectName][arguments.property] = DateFormat(loc.objectProperty, $datePickerMapDateMask(loc.dateFormat))>
 			</cfif>
