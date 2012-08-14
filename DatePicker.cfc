@@ -1,7 +1,7 @@
 ﻿<cfcomponent output="false" mixin="controller">
 
 	<cffunction name="init">
-		<cfset this.version = "1.1.7">
+		<cfset this.version = "1.1.7,1.1.8">
 		<cfreturn this>
 	</cffunction>
 	
@@ -99,7 +99,12 @@
 		</cfif>
 		
 		<!--- javascript --->
-		<cfset loc.javascript = "<script>$(window).load(function() {$('#loc.selector#').datepicker(#ArrayLen(loc.options) gt 0 ? "{#ArrayToList(loc.options,";")#}" : ""#)});</script>">
+		<cfif ArrayLen(loc.options) gt 0>
+			<cfset loc.javascriptOptions = "{#ArrayToList(loc.options,";")#}">
+		<cfelse>
+			<cfset loc.javascriptOptions = "">
+		</cfif>
+		<cfset loc.javascript = "<script>$(window).load(function() {$('#loc.selector#').datepicker(#loc.javascriptOptions#)});</script>">
 		
 		<cfreturn loc>
 	</cffunction>
