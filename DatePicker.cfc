@@ -50,7 +50,7 @@
 		</cfif>
 	
 		<!--- the options available to me --->
-		<cfset loc.availableOptions = "disabled,altField,altFormat,appendText,autoSize,buttonImage,buttonImageOnly,buttonText,calculateWeek,changeMonth,changeYear,closeText,constrainInput,currentText,dateFormat,dayNames,dayNamesMin,dayNamesShort,defaultDate,duration,firstDay,gotoCurrent,hideIfNoPrevNext,isRTL,maxDate,minDate,monthNames,monthNamesShort,navigationAsDateFormat,nextText,numberOfMonths,prevText,selectOtherMonths,shortYearCutoff,showAnim,showButtonPanel,showCurrentAtPos,showMonthAfterYear,showOn,showOptions,showOtherMonths,showWeek,stepMonths,weekHeader,yearRange,yearSuffix">
+		<cfset loc.availableOptions = "disabled,altField,altFormat,appendText,autoSize,buttonImage,buttonImageOnly,buttonText,calculateWeek,changeMonth,changeYear,closeText,constrainInput,currentText,dateFormat,dayNames,dayNamesMin,dayNamesShort,defaultDate,duration,firstDay,gotoCurrent,hideIfNoPrevNext,isRTL,maxDate,minDate,monthNames,monthNamesShort,navigationAsDateFormat,nextText,numberOfMonths,prevText,selectOtherMonths,shortYearCutoff,showAnim,showButtonPanel,showCurrentAtPos,showMonthAfterYear,showOn,showOptions,showOtherMonths,showWeek,stepMonths,weekHeader,yearRange,yearSuffix,onChangeMonthYear,onClose,onSelect">
 		<!--- the arguments to pass to the cfwheels form helper function --->
 		<cfset loc.helperArgs = Duplicate(arguments)>
 		
@@ -82,7 +82,8 @@
 				<cfif IsNumeric(arguments[loc.i])>
 				<cfelseif Left(arguments[loc.i],1) IS "{" && Right(arguments[loc.i],1) IS "}">
 				<cfelseif Left(arguments[loc.i],1) IS "[" && Right(arguments[loc.i],1) IS "]">
-				<cfelseif ListFind("true,false", arguments[loc.i]) gt 0>	
+				<cfelseif ListFind("true,false", arguments[loc.i]) gt 0>
+				<cfelseif ListFindNoCase("onChangeMonthYear,onClose,onSelect", loc.i) gt 0>	
 				<cfelse>
 					<cfset arguments[loc.i] = "'#arguments[loc.i]#'">
 				</cfif>
@@ -100,7 +101,7 @@
 		
 		<!--- javascript --->
 		<cfif ArrayLen(loc.options) gt 0>
-			<cfset loc.javascriptOptions = "{#ArrayToList(loc.options,";")#}">
+			<cfset loc.javascriptOptions = "{#ArrayToList(loc.options)#}">
 		<cfelse>
 			<cfset loc.javascriptOptions = "">
 		</cfif>

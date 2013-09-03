@@ -7,6 +7,9 @@
 		<cfset loc.assetsPath = "plugins/DatePicker/tests/assets" />
 		<!--- repoint the lookup paths wheels uses to our assets directories --->
 		<cfset application.wheels.controllerPath = "#loc.assetsPath#/controllers" />
+		<!--- clear defaults --->
+		<cfset StructDelete(application.wheels.functions, "datePicker")>
+		<cfset StructDelete(application.wheels.functions, "datePickerTag")>
 		<!--- we're always going to need a controller for our test so we'll just create one --->
 		<cfset params = {controller="foo", action="bar"} />
 		<cfset foo = controller("Foo", params) />
@@ -16,7 +19,7 @@
 		<cfset assert("true")>
 	</cffunction>
 	
-	<cffunction name="test_01_datePickerTag_markup_using_default_jquery_options">
+	<cffunction name="_test_01_datePickerTag_markup_using_default_jquery_options">
 		<cfset dateString = DateFormat(Now(), "mm/dd/yyyy")>
 		
 		<cfset a = foo.datePickerTag(name="foo", value=dateString)>
@@ -44,9 +47,9 @@
 		<cfset inputString = '<input id="foo" name="foo" type="text" value="" />'>
 		
 		<!--- dateFormat string --->
-		<cfset a = foo.datePickerTag(name="foo", value=dateString, dateFormat=dateMask)>
+		<cfset a = foo.datePickerTag(name="foo", value=Now(), dateFormat=dateMask)>
 		<cfset _a = '<input id="foo" name="foo" type="text" value="#dateString#" />'>
-		
+
 		<!--- boolean --->
 		<cfset b = foo.datePickerTag(name="foo", value="", head=false, disabled="false")>
 		<cfset _b = "<script>$(window).load(function() {$('##foo').datepicker({disabled:false})});</script>" & inputString>
@@ -64,8 +67,8 @@
 		<cfset _e = "<script>$(window).load(function() {$('##foo').datepicker({showOptions:{direction:'up'}})});</script>" & inputString>
 		
 		<!--- multiple --->
-		<cfset f = foo.datePickerTag(name="foo", value="", head=false, disabled="false", dayNames=dayArray, stepMonths=2, showOptions="{direction:'up'}")>
-		<cfset _f = "<script>$(window).load(function() {$('##foo').datepicker({disabled:false;dayNames:#dayArray#;showOptions:{direction:'up'};stepMonths:2})});</script>" & inputString>
+		<cfset f = foo.datePickerTag(name="foo", value="", head=false, disabled="false", dayNames=dayArray, stepMonths=2, showOptions="{direction:'up'}", onClose="doThis(1)")>
+		<cfset _f = "<script>$(window).load(function() {$('##foo').datepicker({disabled:false,dayNames:#dayArray#,showOptions:{direction:'up'},stepMonths:2,onClose:doThis(1)})});</script>" & inputString>
 		
 		<cfset assert("a eq _a")>
 		<cfset assert("b eq _b")>
